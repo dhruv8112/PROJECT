@@ -18,20 +18,21 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from product_app.views import login,category,single_product
+from product_app.views import login, category, single_product, cart
 from User_app import views
 from contact_us_app.views import contact_us
-
 
 
 # agar multiple views mathi url import karavna hoy ne error aave toh product app n jem  import kari deva
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Login/', views.login, name='login'),  # Use the login view from product_app
-    path('', views.index,name='index'),
+    # Use the login view from product_app
+    path('Login/', views.login, name='login'),
+    path('', views.index, name='index'),
     path('Register', views.register_page),
     path('contact/', contact_us, name='contact_us'),
     path('category', category),
-     path('single/<int:pro_id>/', single_product, name='single_product')
+    path('single/<int:pro_id>/', single_product, name='single_product'),
+    path('cart/<int:product_id>/',cart, name='cart'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

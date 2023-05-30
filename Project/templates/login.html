@@ -200,6 +200,7 @@
       </div>
     </section>
     <!-- End Banner Area -->
+ 
 
     <!--================Login Box Area =================-->
     <section class="login_box_area section_gap">
@@ -223,7 +224,7 @@
           <div class="col-lg-6">
             <div class="login_form_inner">
               <h3>Log in to enter</h3>
-              <form class="row login_form" action="{% url 'index' %}" method="post" id="contactForm" novalidate="novalidate">
+              <form class="mt-5 mb-5 login-input" method="post" action="\login">
 
 			  {%csrf_token%}
                 <div class="col-md-12 form-group">
@@ -247,6 +248,10 @@
                     onblur="this.placeholder = 'Password'"
                   />
                 </div>
+                {% if message %}
+    
+                {{message}}
+              {% endif %}
                 <div class="col-md-12 form-group">
                   <div class="creat_account">
                     <input type="checkbox" id="f-option2" name="selector" />

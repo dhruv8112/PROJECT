@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import products, categories, cart
 from django.contrib.auth import authenticate, login
@@ -9,11 +11,10 @@ def login(request):
 
     return render(request, 'login.html')
 
-
 def index(request):
-    prod = products.get_product()
-    print(prod)
-    return render(request, 'index.html', {'pro': prod})
+    product_list = products.get_product()
+    print(product_list,products)
+    return render(request, 'index.html', {'products': product_list})
 
 
 def single_product(request, pro_id):
@@ -27,22 +28,11 @@ def category(request):
     print(cat)
     return render(request, 'category.html', {'cat': cat})
 
-from django.shortcuts import  get_object_or_404
-
-def cart(request, product_id):
-    product = get_object_or_404(product, id=product_id)
-    cart_item, created = cart.objects.get_or_create(user=request.user, product=product)
-
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
-
-    return render(request, 'cart.html')
-
 
 # Create your models here.
 def index(request):
     return render(request, 'index.html')
+
 
 def register_page(request):
     if request.method == 'POST':
@@ -51,36 +41,45 @@ def register_page(request):
         upass = request.POST.get('password')
         ucon_password = request.POST.get('confirm_password')
         uaddress = request.POST.get('address')
-        
+
         # Check if the user with the same username already exists
         if User.objects.filter(username=uname).exists():
             # User with the same username already exists
             # Handle the appropriate logic (e.g., display an error message)
             return HttpResponse('Username already exists')
-        
+
         # Create a new user
         my_user = User.objects.create_user(uname, uemail, upass)
         my_user.save()
-        return redirect(login)  # Redirect to the login page after successful registration
+        # Redirect to the login page after successful registration
+        return redirect(login)
 
     # Render the registration form
     return render(request, 'reg.html')
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-
 def login(request):
     if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        email = request.POST.get('user_name')
+        password = request.POST.get('user_password')
+        print(email, password)
         user = authenticate(request, username=email, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('index')  # Replace 'index' with the appropriate URL name for your index page
+            return redirect('index')
+        # Replace 'index' with the appropriate URL name for your index page
         else:
             message = 'Invalid email or password'
+            print(message)
             return render(request, 'login.html', {'message': message})
-    else:
-        return render(request, 'login.html')
+    return render(request, 'login.html')
+
+
+def cart(request, product_id):
+
+    product = get_object_or_404(product, id=product_id)
+    cart_item, created = cart.objects.get_or_create(user=request.user, product=product)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return render(request,'cart.html')

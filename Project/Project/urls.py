@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from product_app.views import login, category, single_product, cart,index,register_page
+from product_app.views import  category, single_product, cart,index,register_page
+from product_app import views
 
 from contact_us_app.views import contact_us
 
@@ -28,7 +29,7 @@ from contact_us_app.views import contact_us
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Use the login view from product_app
-    path('Login/', login, name='login'),
+    path('login',views.login,name='login.html'),
     path('', index, name='index'),
     path('Register', register_page),
     path('contact/', contact_us, name='contact_us'),

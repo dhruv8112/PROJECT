@@ -353,10 +353,11 @@
               <div class="single-product">
                 <img class="img-fluid" src="img/product/p3.jpg" alt="" />
                 <div class="product-details">
-                  <h6>addidas New Hammer sole for Sports person</h6>
+                  {%for product in prod%}
+                  <h6>{{product.pro_name}}</h6>
                   <div class="price">
-                    <h6>$150.00</h6>
-                    <h6 class="l-through">$210.00</h6>
+                    <h6>{{product.price}}</h6>
+                    
                   </div>
                   <div class="prd-bottom">
                     <a href="" class="social-info">
@@ -376,6 +377,7 @@
                       <p class="hover-text">view more</p>
                     </a>
                   </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
@@ -390,24 +392,7 @@
         </div>
       </div>
       <!-- single product slide -->
-      <div class="single-product-slider">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6 text-center">
-              <div class="section-title">
-                <h1>Coming Products</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- single product -->
-          </div>
-        </div>
-      </div>
+   
     </section>
     <!-- end product Area -->
 

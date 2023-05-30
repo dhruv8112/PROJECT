@@ -10,6 +10,9 @@ class categories(models.Model):
     def img_return(self):
         return format_html('<img src="/media/{}" style="width:40px; height:40px border-radius:70%" />'.format(self.img))
     
+    def __str__(self):
+        return self.cat_name
+    
     def get_category():
         return categories.objects.all()
     
@@ -29,6 +32,7 @@ class products(models.Model):
 
 
 class Images(models.Model):
+    Imag_name=models.ForeignKey(categories, on_delete=models.CASCADE, related_name='pro_name' , null=True)
     product = models.ForeignKey(
         products, on_delete=models.CASCADE, related_name='images')
     img = models.ImageField(upload_to='ProductImage')
@@ -55,3 +59,5 @@ class user(models.Model):
     age = models.IntegerField()
     # Set default value manually
     country = models.CharField(max_length=50, choices=COUNTRY_CHOICES,default='')
+
+
